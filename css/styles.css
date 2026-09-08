@@ -705,12 +705,14 @@ p:last-child {
 
 .hero-fullscreen-title em {
   font-style: italic;
-  
   font-weight: 400;
   background: linear-gradient(135deg, #f7e7c4 0%, #dfbf78 50%, #c5a059 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  padding-right: 0.12em;
+  padding-bottom: 0.08em;
 }
 
 .hero-fullscreen-description {
