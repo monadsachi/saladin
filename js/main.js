@@ -362,18 +362,12 @@ function initModals() {
           <div class="catalog-slider-category">${category}</div>
           <h3 class="catalog-slider-title">${titleHtml}</h3>
           <div class="catalog-slider-specs">${specs}</div>
-          <p class="catalog-slider-desc">
-            Crafted with archival pigment inks on reinforced luxury substrates. Precision trimmed for edge-to-edge seamless installation by our guild-certified master paperhangers.
-          </p>
+         
           <div class="catalog-slider-actions">
             <button onclick="orderSample('${titleText.replace(/'/g, "\\'")}')" class="btn btn-gold btn-sm">Order Physical Swatch</button>
             <a href="contact.html?inquiry=${encodeURIComponent(titleText)}" class="btn btn-outline-dark btn-sm">Request Installation Quote</a>
           </div>
-          <div class="catalog-slider-perks">
-            <span>✓ Hand-Trimmed Precision Match</span>
-            <span>✓ Complimentary Design Consultation</span>
-            <span>✓ Master Wallcovering Guild Certified</span>
-          </div>
+        
         </div>
       </div>
     `;
