@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="gilded">
 <head>
   <meta charset="UTF-8">
@@ -9,6 +9,14 @@
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .filter-btn.active {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      border-color: var(--gold-base);
+      color: black;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
@@ -89,7 +97,7 @@
           <a href="index.html">Home</a> <span>/</span> <span style="color: var(--gold-base);">Our Work</span>
         </div>
         <h1 class="gold-gradient-text">Architectural Installation Portfolio</h1>
-        <p>A showcase of precision craftsmanship spanning private estates, grand penthouses, boutique hospitality suites, and bespoke powder rooms.</p>
+        <p>We brought new life, character and elegance to our clients’ walls.</p>
       </div>
     </div>
   </section>
@@ -101,185 +109,184 @@
       <!-- Filter Tabs -->
       <div class="work-filter-tabs">
         <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="residential">Luxury Residential</button>
-        <button class="filter-btn" data-filter="murals">Scenic Murals</button>
-        <button class="filter-btn" data-filter="powder">Powder Rooms</button>
-        <button class="filter-btn" data-filter="grasscloth">Natural Grasscloth</button>
-        <button class="filter-btn" data-filter="commercial">Commercial & Hospitality</button>
+        <button class="filter-btn" data-filter="commercial">Commercial</button>
+        <button class="filter-btn" data-filter="bedroom">Bedroom</button>
+        <button class="filter-btn" data-filter="ceiling">Ceiling</button>
+        <button class="filter-btn" data-filter="livingroom">Living Room</button>
+        <button class="filter-btn" data-filter="mural">Mural</button>
+        <button class="filter-btn" data-filter="officeroom">Office Room</button>
+        <button class="filter-btn" data-filter="powder">Powder Room</button>
       </div>
 
       <!-- Portfolio Grid -->
       <div class="work-grid">
-        
-        <!-- Project 1 -->
-        <div class="work-card" data-category="residential">
-          <div class="work-badge">Chinoiserie Salon</div>
-          <div class="work-card-media">
-            <img src="assets/images/hero-wallcovering.jpg" alt="Pacific Heights Chinoiserie Salon wallcovering">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Luxury Residential</span>
-              <h3 class="work-card-title">The Pacific Heights Chinoiserie Salon</h3>
-              <div class="work-card-specs">
-                <span>San Francisco, CA</span> &bull; <span>Silk Wallpaper</span> &bull; <span>Ceiling Wrap</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Designer: Studio Vance</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
-        </div>
 
-        <!-- Project 2 -->
-        <div class="work-card" data-category="murals">
-          <div class="work-badge">Panoramic Mural</div>
-          <div class="work-card-media">
-            <img src="assets/images/scenic-mural.jpg" alt="Panoramic scenic landscape dining room wallcovering">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Scenic Murals</span>
-              <h3 class="work-card-title">Imperial Botanical Dining Room</h3>
-              <div class="work-card-specs">
-                <span>Palm Beach, FL</span> &bull; <span>12 Custom Panels</span> &bull; <span>Double Cut</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: de Gournay Hand-painted</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="work-card" data-category="powder">
-          <div class="work-badge">Powder Room</div>
-          <div class="work-card-media">
-            <img src="assets/images/gilded-powder-room.jpg" alt="Gilded Art Deco powder room wallpaper">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Powder Rooms</span>
-              <h3 class="work-card-title">Gilded Deco Jewel Box</h3>
-              <div class="work-card-specs">
-                <span>Tribeca, NYC</span> &bull; <span>Gold Leaf Foil</span> &bull; <span>Waterproof Seal</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: Scalamandré Metallic</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="work-card" data-category="grasscloth">
-          <div class="work-badge">Textured Weave</div>
-          <div class="work-card-media">
-            <img src="assets/images/grasscloth-wall.jpg" alt="Natural woven grasscloth installation">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Natural Grasscloth</span>
-              <h3 class="work-card-title">Artisan Sisal Executive Library</h3>
-              <div class="work-card-specs">
-                <span>Greenwich, CT</span> &bull; <span>Natural Abaca Fiber</span> &bull; <span>Zero-Paste Face</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: Phillip Jeffries Manila Hemp</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
-        </div>
-
-        <!-- Project 5 -->
+        <!-- Commercial 1 -->
         <div class="work-card" data-category="commercial">
-          <div class="work-badge">Substrate Prep</div>
-          <div class="work-card-media">
-            <img src="assets/images/surface-preparation.jpg" alt="Commercial drywall preparation and Roman primer">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Commercial & Hospitality</span>
-              <h3 class="work-card-title">The Grand Atrium Hotel Prep & Primer</h3>
-              <div class="work-card-specs">
-                <span>Chicago, IL</span> &bull; <span>Level 5 Skim Coat</span> &bull; <span>Roman Pro Sizing</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Scope: 4,800 sq ft Commercial Fit</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
+          <div class="work-badge">Commercial</div>
+          <img src="images/work/Commercial/bb2624f3-a16a-458a-992b-036e8d7197a4.jpg" alt="Commercial Wallcovering Installation I">
         </div>
 
-        <!-- Project 6 -->
-        <div class="work-card" data-category="residential">
-          <div class="work-badge">Master Craft</div>
-          <div class="work-card-media">
-            <img src="assets/images/craftsman-installer.jpg" alt="Master artisan setting wallpaper seam with laser level">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Luxury Residential</span>
-              <h3 class="work-card-title">Highland Park Master Suite Alignment</h3>
-              <div class="work-card-specs">
-                <span>Dallas, TX</span> &bull; <span>Laser Plumb Match</span> &bull; <span>Hand-Rolled Seams</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: Pierre Frey Jacquard</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
+        <!-- Commercial 2 -->
+        <div class="work-card" data-category="commercial">
+          <div class="work-badge">Commercial</div>
+          <img src="images/work/Commercial/d92e924e-36a2-49b6-a91e-ac1ff52a0935.jpg" alt="Commercial Space Installation II">
         </div>
 
-        <!-- Project 7 -->
-        <div class="work-card" data-category="murals">
-          <div class="work-badge">Architectural Mural</div>
-          <div class="work-card-media">
-            <img src="assets/images/scenic-mural.jpg" alt="Scenic panoramic landscape mural gallery">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Scenic Murals</span>
-              <h3 class="work-card-title">Tuscan Hills Staircase Gallery</h3>
-              <div class="work-card-specs">
-                <span>Scottsdale, AZ</span> &bull; <span>Double Height Rake</span> &bull; <span>Laser Alignment</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Height: 22-foot Raked Drops</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
+        <!-- Bedroom 1 -->
+        <div class="work-card" data-category="bedroom">
+          <div class="work-badge">Bedroom</div>
+          <img src="images/work/bedroom/43f53bc9-f0e3-4b87-8e8c-bf49e316e52f.jpg" alt="Master Bedroom Feature Wall I">
         </div>
 
-        <!-- Project 8 -->
-        <div class="work-card" data-category="grasscloth">
-          <div class="work-badge">Natural Grasscloth</div>
-          <div class="work-card-media">
-            <img src="assets/images/grasscloth-wall.jpg" alt="Natural woven grasscloth installation in chalet">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Natural Grasscloth</span>
-              <h3 class="work-card-title">Red Mountain Chalet Retreat</h3>
-              <div class="work-card-specs">
-                <span>Aspen, CO</span> &bull; <span>Warm Woven Sisal</span> &bull; <span>White Trim Inlay</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: Thibaut Woven Sisal</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
+        <!-- Bedroom 2 -->
+        <div class="work-card" data-category="bedroom">
+          <div class="work-badge">Bedroom</div>
+          <img src="images/work/bedroom/5fb18a1c-6e61-466d-b685-f995ae30fff8.jpg" alt="Master Bedroom Feature Wall II">
         </div>
 
-        <!-- Project 9 -->
+        <!-- Ceiling 1 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/1.jpg" alt="Architectural Ceiling Installation I">
+        </div>
+
+        <!-- Ceiling 2 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/2.jpg" alt="Architectural Ceiling Installation II">
+        </div>
+
+        <!-- Ceiling 3 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/3.jpg" alt="Architectural Ceiling Installation III">
+        </div>
+
+        <!-- Ceiling 4 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/4.jpg" alt="Architectural Ceiling Installation IV">
+        </div>
+
+        <!-- Ceiling 5 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/5.jpg" alt="Architectural Ceiling Installation V">
+        </div>
+
+        <!-- Ceiling 6 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/6.jpg" alt="Architectural Ceiling Installation VI">
+        </div>
+
+        <!-- Ceiling 7 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/7.jpg" alt="Architectural Ceiling Installation VII">
+        </div>
+
+        <!-- Ceiling 8 -->
+        <div class="work-card" data-category="ceiling">
+          <div class="work-badge">Ceiling</div>
+          <img src="images/work/ceiling/8.jpg" alt="Architectural Ceiling Installation VIII">
+        </div>
+
+        <!-- Living Room 1 -->
+        <div class="work-card" data-category="livingroom">
+          <div class="work-badge">Living Room</div>
+          <img src="images/work/livingroom/d06e200f-761d-4e4e-8bf9-4eaf30f39814.jpg" alt="Living Room Accent Installation">
+        </div>
+
+        <!-- Mural 1 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/1.jpg" alt="Scenic Panoramic Mural I">
+        </div>
+
+        <!-- Mural 2 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/2.jpg" alt="Scenic Panoramic Mural II">
+        </div>
+
+        <!-- Mural 3 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/3.jpg" alt="Scenic Panoramic Mural III">
+        </div>
+
+        <!-- Mural 4 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/4.jpg" alt="Scenic Panoramic Mural IV">
+        </div>
+
+        <!-- Mural 5 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/5.jpg" alt="Scenic Panoramic Mural V">
+        </div>
+
+        <!-- Mural 6 -->
+        <div class="work-card" data-category="mural">
+          <div class="work-badge">Mural</div>
+          <img src="images/work/mural/6.jpg" alt="Scenic Panoramic Mural VI">
+        </div>
+
+        <!-- Office Room 1 -->
+        <div class="work-card" data-category="officeroom">
+          <div class="work-badge">Office Room</div>
+          <img src="images/work/officeroom/ad9cf65b-d79e-4bd0-af55-9c4b6bdbb5ec.jpg" alt="Executive Office Suite I">
+        </div>
+
+        <!-- Office Room 2 -->
+        <div class="work-card" data-category="officeroom">
+          <div class="work-badge">Office Room</div>
+          <img src="images/work/officeroom/ebdbd70d-51f6-4882-83a6-cc1fb6019750.jpg" alt="Executive Office Suite II">
+        </div>
+
+        <!-- Powder Room 1 -->
         <div class="work-card" data-category="powder">
           <div class="work-badge">Powder Room</div>
-          <div class="work-card-media">
-            <img src="assets/images/gilded-powder-room.jpg" alt="Geometric gold and black powder room wallpaper">
-            <div class="work-card-overlay">
-              <span class="work-card-category">Powder Rooms</span>
-              <h3 class="work-card-title">Midnight Geometric Powder Suite</h3>
-              <div class="work-card-specs">
-                <span>Georgetown, DC</span> &bull; <span>Metallic Art Deco</span> &bull; <span>Arched Mirror Surrounds</span>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 1.2rem 1.5rem; background: var(--bg-card); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Paper: Gilded Deco Inlay</span>
-            <button class="btn btn-outline-dark btn-sm btn-quick-view">Project Details</button>
-          </div>
+          <img src="images/work/powder/1.jpg" alt="Powder Room Jewel Box I">
+        </div>
+
+        <!-- Powder Room 2 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/2.jpg" alt="Powder Room Jewel Box II">
+        </div>
+
+        <!-- Powder Room 3 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/3.jpg" alt="Powder Room Jewel Box III">
+        </div>
+
+        <!-- Powder Room 4 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/4.jpg" alt="Powder Room Jewel Box IV">
+        </div>
+
+        <!-- Powder Room 5 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/5.jpg" alt="Powder Room Jewel Box V">
+        </div>
+
+        <!-- Powder Room 6 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/6.jpg" alt="Powder Room Jewel Box VI">
+        </div>
+
+        <!-- Powder Room 7 -->
+        <div class="work-card" data-category="powder">
+          <div class="work-badge">Powder Room</div>
+          <img src="images/work/powder/7.jpg" alt="Powder Room Jewel Box VII">
         </div>
 
       </div>
@@ -331,13 +338,13 @@
   </section>
 
   <!-- Global Modal Container -->
-  <div id="globalModal" class="modal-backdrop">
+  <!-- <div id="globalModal" class="modal-backdrop">
     <div class="modal-box">
       <button id="modalClose" class="modal-close">&times;</button>
       <h3 id="modalTitle" style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.2rem;"></h3>
       <div id="modalBody"></div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Site Footer -->
   <footer class="site-footer">

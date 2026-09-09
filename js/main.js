@@ -96,10 +96,10 @@ function initPortfolioFilters() {
       filterButtons.forEach(b => b.classList.remove('active'));
       button.classList.add('active');
 
-      const filterValue = button.getAttribute('data-filter');
+      const filterValue = (button.getAttribute('data-filter') || '').toLowerCase().trim();
 
       workItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
+        const itemCategory = (item.getAttribute('data-category') || '').toLowerCase().trim();
         if (filterValue === 'all' || filterValue === itemCategory) {
           item.style.display = 'block';
           setTimeout(() => {
@@ -285,10 +285,11 @@ function initModals() {
     if (!card) return;
 
     const titleEl = card.querySelector('.catalog-title, .work-card-title');
-    const titleHtml = titleEl ? titleEl.innerHTML.trim() : 'Design Details';
-    const titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : 'Design Details';
+    const altText = card.querySelector('img')?.getAttribute('alt') || 'Design Details';
+    const titleHtml = titleEl ? titleEl.innerHTML.trim() : altText;
+    const titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : altText;
     const title = titleText;
-    const category = card.querySelector('.catalog-category, .work-card-category')?.textContent.trim() || 'Wallcovering Collection';
+    const category = card.querySelector('.catalog-category, .work-card-category, .work-badge')?.textContent.trim() || 'Wallcovering Collection';
     const specs = card.querySelector('.catalog-specs, .work-card-specs')?.innerHTML.trim() || '';
     const primaryImg = card.querySelector('.catalog-card-media img, img')?.getAttribute('src') || '';
 
@@ -462,11 +463,11 @@ function initModals() {
     });
   });
 
-  // Attach triggers to catalog card images (clicking on card media opens slider)
-  document.querySelectorAll('.catalog-card .catalog-card-media').forEach(media => {
+  // Attach triggers to card images (clicking on card media opens slider)
+  document.querySelectorAll('.catalog-card .catalog-card-media, .work-card, .work-card-media').forEach(media => {
     media.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      const card = media.closest('.catalog-card');
+      const card = media.closest('.catalog-card') || (media.classList.contains('work-card') ? media : media.closest('.work-card'));
       if (card) window.openCatalogSlider(card);
     });
   });
