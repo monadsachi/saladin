@@ -662,7 +662,7 @@ function initHomeMuralSlider() {
   const total = cards.length;
   let current = 0;
   let autoPlayTimer = null;
-  const slideDuration = 4000; // 4 seconds per slide
+  const slideDuration = 3000; // 3 seconds per slide
   let isPaused = false;
 
   function formatNum(n) {
