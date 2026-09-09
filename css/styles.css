@@ -1222,14 +1222,15 @@ p:last-child {
   border-radius: var(--radius-xs);
   overflow: hidden;
   background-color: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid #f3c761;
+  padding: 10px;
   transition: all var(--transition-smooth);
   cursor: pointer;
 }
 
 .work-card:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--gold-border);
+  box-shadow: 0 10px 30px rgba(243, 199, 97, 0.3);
+  border-color: #ffd978;
   transform: translateY(-4px);
 }
 
@@ -1245,12 +1246,13 @@ p:last-child {
   height: 480px;
   object-fit: cover;
   display: block;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .work-card:hover img,
 .work-card:hover .work-card-media img {
-  transform: scale(1.06);
+  transform: scale(1.02);
 }
 
 .work-card-overlay {
