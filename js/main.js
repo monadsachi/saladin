@@ -284,7 +284,10 @@ function initModals() {
   window.openCatalogSlider = function(card) {
     if (!card) return;
 
-    const title = card.querySelector('.catalog-title, .work-card-title')?.textContent.trim() || 'Design Details';
+    const titleEl = card.querySelector('.catalog-title, .work-card-title');
+    const titleHtml = titleEl ? titleEl.innerHTML.trim() : 'Design Details';
+    const titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : 'Design Details';
+    const title = titleText;
     const category = card.querySelector('.catalog-category, .work-card-category')?.textContent.trim() || 'Wallcovering Collection';
     const specs = card.querySelector('.catalog-specs, .work-card-specs')?.innerHTML.trim() || '';
     const primaryImg = card.querySelector('.catalog-card-media img, img')?.getAttribute('src') || '';
@@ -323,7 +326,7 @@ function initModals() {
     images.forEach((imgSrc, idx) => {
       slidesHtml += `
         <div class="catalog-slider-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
-          <img src="${imgSrc}" alt="${title} view ${idx + 1}" loading="eager">
+          <img src="${imgSrc}" alt="${titleText} view ${idx + 1}" loading="eager">
         </div>
       `;
       thumbsHtml += `
@@ -357,14 +360,14 @@ function initModals() {
 
         <div class="catalog-slider-info">
           <div class="catalog-slider-category">${category}</div>
-          <h3 class="catalog-slider-title">${title}</h3>
+          <h3 class="catalog-slider-title">${titleHtml}</h3>
           <div class="catalog-slider-specs">${specs}</div>
           <p class="catalog-slider-desc">
             Crafted with archival pigment inks on reinforced luxury substrates. Precision trimmed for edge-to-edge seamless installation by our guild-certified master paperhangers.
           </p>
           <div class="catalog-slider-actions">
-            <button onclick="orderSample('${title.replace(/'/g, "\\'")}')" class="btn btn-gold btn-sm">Order Physical Swatch</button>
-            <a href="contact.html?inquiry=${encodeURIComponent(title)}" class="btn btn-outline-dark btn-sm">Request Installation Quote</a>
+            <button onclick="orderSample('${titleText.replace(/'/g, "\\'")}')" class="btn btn-gold btn-sm">Order Physical Swatch</button>
+            <a href="contact.html?inquiry=${encodeURIComponent(titleText)}" class="btn btn-outline-dark btn-sm">Request Installation Quote</a>
           </div>
           <div class="catalog-slider-perks">
             <span>✓ Hand-Trimmed Precision Match</span>

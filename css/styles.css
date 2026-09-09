@@ -115,6 +115,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  -moz-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
 }
 
 h1 {
@@ -1468,8 +1472,27 @@ p:last-child {
 }
 
 .catalog-title {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   margin-bottom: 0.5rem;
+  line-height: 1.35;
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+.catalog-size,
+.catalog-title .catalog-size {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.03em;
+  margin-top: 0.35rem;
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+  text-transform: uppercase;
 }
 
 .catalog-specs {
@@ -2121,7 +2144,15 @@ textarea.form-control {
   font-size: 1.9rem;
   color: var(--text-dark);
   margin-bottom: 0.75rem;
-  line-height: 1.2;
+  line-height: 1.25;
+  font-variant-numeric: lining-nums;
+  -webkit-font-feature-settings: "lnum" 1;
+  font-feature-settings: "lnum" 1;
+}
+
+.catalog-slider-title .catalog-size {
+  font-size: 0.95rem;
+  margin-top: 0.45rem;
 }
 
 .catalog-slider-specs {
