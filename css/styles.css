@@ -3031,78 +3031,129 @@ textarea.form-control {
 }
 
 /* ==========================================================================
-   Home Mural Wallpapers Slider
+   Voyager Portrait Mural Slider (Height > Width)
    ========================================================================== */
-.home-slider-container {
-  max-width: 980px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.home-slider-viewport {
+.voyager-slider-wrapper {
   position: relative;
   width: 100%;
-  height: 580px;
-  background-color: var(--bg-card);
-  border: 1px solid #f3c761;
-  padding: 10px;
-  border-radius: var(--radius-xs);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(243, 199, 97, 0.15);
+  overflow: hidden;
+  padding: 1.5rem 0 2rem 0;
+}
+
+.voyager-slider-container {
+  position: relative;
+  width: 100%;
+  height: 630px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
   user-select: none;
   touch-action: pan-y;
   outline: none;
 }
 
-.home-slider-viewport:focus-visible {
-  box-shadow: 0 0 0 2px var(--gold-base), 0 16px 40px rgba(0, 0, 0, 0.7);
-}
-
-.home-slider-track {
+.voyager-slider-track {
   display: flex;
-  width: 100%;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
-.home-slider-slide {
-  min-width: 100%;
+/* Portrait Card: Height (580px) is bigger than Width (540px), showing 96%+ of mural */
+.voyager-card {
+  flex: 0 0 540px;
+  width: 540px;
+  height: 580px;
+  margin: 0 18px;
+  position: relative;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-card);
+  border: 1px solid rgba(243, 199, 97, 0.35);
+  padding: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  opacity: 0.45;
+  transform: scale(0.86);
+  filter: brightness(0.65);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+/* Active / Center Card in Voyager Slider - Displays prominently */
+.voyager-card.active {
+  opacity: 1;
+  transform: scale(1.02);
+  filter: brightness(1);
+  border-color: #f3c761;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(243, 199, 97, 0.35);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.voyager-card-inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  flex-shrink: 0;
-  position: relative;
   overflow: hidden;
   border-radius: 1px;
   background-color: #0b0803;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.home-slider-slide img {
+.voyager-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   pointer-events: none;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.home-slider-viewport:hover .home-slider-slide.active img {
+.voyager-card.active:hover img {
   transform: scale(1.03);
 }
 
-/* Navigation Buttons */
-.home-slider-btn {
+.voyager-card-badge {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  top: 14px;
+  right: 14px;
   background: rgba(18, 14, 6, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-base);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-xs);
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.voyager-card:not(.active) .voyager-card-badge {
+  opacity: 0.7;
+}
+
+/* Navigation Buttons */
+.voyager-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(18, 14, 6, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid #f3c761;
   color: #f3c761;
   display: flex;
@@ -3111,183 +3162,159 @@ textarea.form-control {
   cursor: pointer;
   z-index: 10;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
 }
 
-.home-slider-btn:hover {
+.voyager-nav-btn:hover {
   background: #f3c761;
   color: #120e06;
-  box-shadow: 0 0 20px rgba(243, 199, 97, 0.6);
-  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 0 24px rgba(243, 199, 97, 0.65);
+  transform: translateY(-50%) scale(1.1);
 }
 
-.home-slider-btn:active {
+.voyager-nav-btn:active {
   transform: translateY(-50%) scale(0.95);
 }
 
-.home-slider-btn.prev {
-  left: 24px;
+.voyager-nav-btn.prev {
+  left: max(20px, calc(50% - 370px));
 }
 
-.home-slider-btn.next {
-  right: 24px;
+.voyager-nav-btn.next {
+  right: max(20px, calc(50% - 370px));
 }
 
-/* Counter Badge */
-.home-slider-counter {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background: rgba(18, 14, 6, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #f3c761;
-  color: #f3c761;
-  font-size: 0.8rem;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-xs);
-  z-index: 10;
-}
-
-/* Auto-Slide Progress Bar */
-.home-slider-progress {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  z-index: 10;
-  overflow: hidden;
-  border-radius: 2px;
-}
-
-.home-slider-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #f3c761, #ffd978);
-  box-shadow: 0 0 8px rgba(243, 199, 97, 0.8);
-}
-
-/* Dot Indicators */
-.home-slider-dots {
+/* Controls Bar (Counter + Dots + Progress) */
+.voyager-controls-bar {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.8rem;
   flex-wrap: wrap;
 }
 
-.home-slider-dot {
-  width: 10px;
-  height: 10px;
+.voyager-counter {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.voyager-counter .active-num {
+  color: var(--gold-base);
+  font-size: 1.1rem;
+}
+
+.voyager-counter .sep {
+  color: var(--border-mid);
+  margin: 0 0.2rem;
+}
+
+.voyager-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.voyager-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: rgba(243, 199, 97, 0.25);
   border: 1px solid rgba(243, 199, 97, 0.5);
   cursor: pointer;
   padding: 0;
-  transition: all 0.3s ease;
+  transition: all 0.35s ease;
 }
 
-.home-slider-dot:hover {
-  background: rgba(243, 199, 97, 0.6);
-  transform: scale(1.2);
+.voyager-dot:hover {
+  background: rgba(243, 199, 97, 0.7);
+  transform: scale(1.25);
 }
 
-.home-slider-dot.active {
+.voyager-dot.active {
   background: #f3c761;
   border-color: #f3c761;
   box-shadow: 0 0 10px rgba(243, 199, 97, 0.7);
-  width: 26px;
-  border-radius: 10px;
+  width: 22px;
+  border-radius: 6px;
 }
 
-/* Thumbnails Strip */
-.home-slider-thumbs {
-  display: flex;
-  gap: 0.6rem;
-  margin-top: 1.2rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold-border) transparent;
-  justify-content: flex-start;
-}
-
-@media (min-width: 900px) {
-  .home-slider-thumbs {
-    justify-content: center;
-  }
-}
-
-.home-slider-thumb {
-  flex: 0 0 54px;
-  width: 54px;
-  height: 54px;
+.voyager-progress-track {
+  width: 80px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 2px;
   overflow: hidden;
-  border: 1px solid rgba(243, 199, 97, 0.3);
-  background: var(--bg-card);
-  cursor: pointer;
-  padding: 2px;
-  opacity: 0.6;
-  transition: all 0.3s ease;
 }
 
-.home-slider-thumb img {
-  width: 100%;
+.voyager-progress-bar {
+  width: 0%;
   height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.home-slider-thumb:hover {
-  opacity: 0.9;
-  border-color: #f3c761;
-  transform: translateY(-2px);
-}
-
-.home-slider-thumb.active {
-  opacity: 1;
-  border-color: #f3c761;
-  box-shadow: 0 0 10px rgba(243, 199, 97, 0.5);
-  transform: scale(1.06);
+  background: linear-gradient(90deg, #f3c761, #ffd978);
+  box-shadow: 0 0 8px rgba(243, 199, 97, 0.8);
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .home-slider-viewport {
-    height: 420px;
-    padding: 8px;
+@media (max-width: 1024px) {
+  .voyager-slider-container {
+    height: 540px;
   }
-  .home-slider-btn {
-    width: 38px;
-    height: 38px;
+  .voyager-card {
+    flex: 0 0 440px;
+    width: 440px;
+    height: 490px;
+    margin: 0 14px;
   }
-  .home-slider-btn.prev {
-    left: 12px;
+  .voyager-nav-btn.prev {
+    left: 16px;
   }
-  .home-slider-btn.next {
-    right: 12px;
-  }
-  .home-slider-counter {
-    top: 14px;
-    right: 14px;
-    font-size: 0.72rem;
-  }
-  .home-slider-thumb {
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+  .voyager-nav-btn.next {
+    right: 16px;
   }
 }
 
-@media (max-width: 480px) {
-  .home-slider-viewport {
-    height: 310px;
+@media (max-width: 768px) {
+  .voyager-slider-container {
+    height: 460px;
+  }
+  .voyager-card {
+    flex: 0 0 350px;
+    width: 350px;
+    height: 410px;
+    margin: 0 10px;
+  }
+  .voyager-nav-btn.prev {
+    left: 12px;
+  }
+  .voyager-nav-btn.next {
+    right: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .voyager-slider-container {
+    height: 400px;
+  }
+  .voyager-card {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 350px;
+    margin: 0 8px;
+    padding: 6px;
+  }
+  .voyager-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .voyager-nav-btn.prev {
+    left: 8px;
+  }
+  .voyager-nav-btn.next {
+    right: 8px;
   }
 }
 

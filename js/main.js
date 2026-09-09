@@ -643,37 +643,40 @@ function initNewsletter() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Home Mural Wallpapers Auto & Interactive Slider                            */
+/* Voyager Portrait Mural Slider Controller                                    */
 /* -------------------------------------------------------------------------- */
 function initHomeMuralSlider() {
   const slider = document.getElementById('homeMuralSlider');
   if (!slider) return;
 
   const track = document.getElementById('homeSliderTrack');
-  const slides = slider.querySelectorAll('.home-slider-slide');
+  const cards = slider.querySelectorAll('.voyager-card');
   const prevBtn = document.getElementById('homeSliderPrev');
   const nextBtn = document.getElementById('homeSliderNext');
   const counter = document.getElementById('homeSliderCounter');
   const dotsContainer = document.getElementById('homeSliderDots');
-  const thumbsContainer = document.getElementById('homeSliderThumbs');
   const progressBar = document.getElementById('homeSliderProgress');
 
-  if (!track || !slides.length) return;
+  if (!track || !cards.length) return;
 
-  const total = slides.length;
+  const total = cards.length;
   let current = 0;
   let autoPlayTimer = null;
   const slideDuration = 4000; // 4 seconds per slide
   let isPaused = false;
 
-  // Build indicator dots dynamically
+  function formatNum(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  // Generate pagination dots
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
-    slides.forEach((_, idx) => {
+    cards.forEach((_, idx) => {
       const dot = document.createElement('button');
       dot.type = 'button';
-      dot.className = `home-slider-dot ${idx === 0 ? 'active' : ''}`;
-      dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+      dot.className = `voyager-dot ${idx === 0 ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `Go to mural ${idx + 1}`);
       dot.addEventListener('click', () => {
         goToSlide(idx);
         resetAutoPlay();
@@ -682,58 +685,44 @@ function initHomeMuralSlider() {
     });
   }
 
-  // Build thumbnail previews dynamically
-  if (thumbsContainer) {
-    thumbsContainer.innerHTML = '';
-    slides.forEach((slide, idx) => {
-      const img = slide.querySelector('img');
-      const thumb = document.createElement('button');
-      thumb.type = 'button';
-      thumb.className = `home-slider-thumb ${idx === 0 ? 'active' : ''}`;
-      thumb.setAttribute('aria-label', `View slide ${idx + 1}`);
-      if (img) {
-        thumb.innerHTML = `<img src="${img.getAttribute('src')}" alt="Thumbnail ${idx + 1}">`;
-      }
-      thumb.addEventListener('click', () => {
-        goToSlide(idx);
-        resetAutoPlay();
-      });
-      thumbsContainer.appendChild(thumb);
-    });
-  }
+  // Center active portrait card in Voyager view
+  function updateCarouselPosition(animated = true) {
+    if (!cards[current]) return;
 
-  function formatNum(n) {
-    return (n < 10 ? '0' : '') + n;
+    const containerWidth = slider.offsetWidth;
+    const activeCard = cards[current];
+    const cardOffsetInTrack = activeCard.offsetLeft;
+    const cardWidth = activeCard.offsetWidth;
+
+    const targetTranslateX = (containerWidth / 2) - (cardOffsetInTrack + (cardWidth / 2));
+
+    track.style.transition = animated ? 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)' : 'none';
+    track.style.transform = `translateX(${targetTranslateX}px)`;
+
+    cards.forEach((c, idx) => {
+      c.classList.toggle('active', idx === current);
+    });
+
+    if (counter) {
+      const activeNum = counter.querySelector('.active-num');
+      if (activeNum) {
+        activeNum.textContent = formatNum(current + 1);
+      } else {
+        counter.textContent = `${formatNum(current + 1)} / ${formatNum(total)}`;
+      }
+    }
+
+    if (dotsContainer) {
+      const dots = dotsContainer.querySelectorAll('.voyager-dot');
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+    }
+
+    restartProgressBar();
   }
 
   function goToSlide(index) {
     current = (index + total) % total;
-    track.style.transform = `translateX(-${current * 100}%)`;
-
-    slides.forEach((s, idx) => {
-      s.classList.toggle('active', idx === current);
-    });
-
-    if (counter) {
-      counter.textContent = `${formatNum(current + 1)} / ${formatNum(total)}`;
-    }
-
-    if (dotsContainer) {
-      const dots = dotsContainer.querySelectorAll('.home-slider-dot');
-      dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
-    }
-
-    if (thumbsContainer) {
-      const thumbs = thumbsContainer.querySelectorAll('.home-slider-thumb');
-      thumbs.forEach((t, idx) => {
-        t.classList.toggle('active', idx === current);
-        if (idx === current) {
-          t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      });
-    }
-
-    restartProgressBar();
+    updateCarouselPosition(true);
   }
 
   function nextSlide() {
@@ -743,6 +732,30 @@ function initHomeMuralSlider() {
   function prevSlide() {
     goToSlide(current - 1);
   }
+
+  // Click on any side card to center it, or click active card to view full uncropped image
+  cards.forEach((card, idx) => {
+    card.addEventListener('click', () => {
+      if (idx !== current) {
+        goToSlide(idx);
+        resetAutoPlay();
+      } else {
+        const img = card.querySelector('img');
+        const badge = card.querySelector('.voyager-card-badge')?.textContent || `Mural ${formatNum(idx + 1)}`;
+        if (img && window.openModal) {
+          window.openModal(badge, `
+            <div style="text-align: center; padding: 0.5rem;">
+              <img src="${img.getAttribute('src')}" alt="${img.getAttribute('alt')}" style="max-width: 100%; max-height: 75vh; object-fit: contain; border: 1px solid #f3c761; padding: 8px; background: var(--bg-card); border-radius: var(--radius-xs);">
+              <div style="margin-top: 1.2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="contact.html?inquiry=${encodeURIComponent(badge)}" class="btn btn-gold btn-sm">Request Installation Quote</a>
+                <button onclick="closeModal()" class="btn btn-outline-dark btn-sm">Close</button>
+              </div>
+            </div>
+          `, true);
+        }
+      }
+    });
+  });
 
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
@@ -771,7 +784,7 @@ function initHomeMuralSlider() {
     }
   });
 
-  // Touch & Swipe gestures
+  // Touch / Swipe gestures
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -789,12 +802,12 @@ function initHomeMuralSlider() {
     }
   }, { passive: true });
 
-  // Auto-play timer & progress bar
+  // Progress bar & auto-play timer
   function restartProgressBar() {
     if (!progressBar) return;
     progressBar.style.transition = 'none';
     progressBar.style.width = '0%';
-    void progressBar.offsetWidth; // Force reflow
+    void progressBar.offsetWidth;
     if (!isPaused) {
       progressBar.style.transition = `width ${slideDuration}ms linear`;
       progressBar.style.width = '100%';
@@ -829,14 +842,17 @@ function initHomeMuralSlider() {
   // Pause on hover
   slider.addEventListener('mouseenter', stopAutoPlay);
   slider.addEventListener('mouseleave', startAutoPlay);
-  if (thumbsContainer) {
-    thumbsContainer.addEventListener('mouseenter', stopAutoPlay);
-    thumbsContainer.addEventListener('mouseleave', startAutoPlay);
-  }
 
-  // Initial display and start
-  goToSlide(0);
-  startAutoPlay();
+  // Recalculate on window resize
+  window.addEventListener('resize', () => {
+    updateCarouselPosition(false);
+  });
+
+  // Initial layout calculation and auto-play
+  setTimeout(() => {
+    updateCarouselPosition(false);
+    startAutoPlay();
+  }, 50);
 }
 
 
