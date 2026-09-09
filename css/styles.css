@@ -2204,7 +2204,7 @@ textarea.form-control {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.4fr 0.9fr 0.9fr 1.2fr;
+  grid-template-columns: 2.4fr 0.9fr 0.9fr;
   gap: 3.5rem;
   margin-bottom: 4.5rem;
 }
