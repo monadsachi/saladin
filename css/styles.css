@@ -1188,7 +1188,7 @@ p:last-child {
 
 .filter-btn {
   background: transparent;
-  border: 1px solid var(--border-mid);
+  border: 1px solid #f3c761;
   padding: 0.65rem 1.6rem;
   border-radius: var(--radius-xs);
   font-size: 0.82rem;
