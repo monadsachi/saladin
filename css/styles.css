@@ -281,13 +281,16 @@ p:last-child {
 }
 
 .btn-outline-dark {
-  background-color: transparent;
+  /* background-color: transparent;
   color: var(--text-dark);
+  border-color: var(--gold-border); */
+  background-color: var(--gold-base);
+  color: #0a0a0a;
   border-color: var(--gold-border);
 }
 
 .btn-outline-dark:hover {
-  background-color: var(--gold-base);
+  background-color: white;
   color: #0a0a0a;
   border-color: var(--gold-base);
 }
