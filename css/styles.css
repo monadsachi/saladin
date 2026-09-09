@@ -2376,6 +2376,56 @@ textarea.form-control {
   font-size: 0.92rem;
 }
 
+/* Service Detail Features Icon Grid (services.html) */
+.service-detail-content ul.service-icon-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 1.45rem;
+  margin: 2rem 0 2.4rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-icon-item {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.service-icon-wrapper {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-base);
+}
+
+.service-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--gold-base);
+  display: block;
+}
+
+.service-icon-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 620px) {
+  .service-detail-content ul.service-icon-list {
+    grid-template-columns: 1fr;
+    row-gap: 1.15rem;
+    column-gap: 0;
+  }
+}
+
 /* Trade Program Grid & Perks (about.html) */
 .trade-program-grid {
   display: grid;
