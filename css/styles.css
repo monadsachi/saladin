@@ -3030,4 +3030,266 @@ textarea.form-control {
   }
 }
 
+/* ==========================================================================
+   Home Mural Wallpapers Slider
+   ========================================================================== */
+.home-slider-container {
+  max-width: 980px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.home-slider-viewport {
+  position: relative;
+  width: 100%;
+  height: 580px;
+  background-color: var(--bg-card);
+  border: 1px solid #f3c761;
+  padding: 10px;
+  border-radius: var(--radius-xs);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 35px rgba(243, 199, 97, 0.15);
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  outline: none;
+}
+
+.home-slider-viewport:focus-visible {
+  box-shadow: 0 0 0 2px var(--gold-base), 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+.home-slider-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-slider-slide {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+  background-color: #0b0803;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-slider-viewport:hover .home-slider-slide.active img {
+  transform: scale(1.03);
+}
+
+/* Navigation Buttons */
+.home-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(18, 14, 6, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #f3c761;
+  color: #f3c761;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-slider-btn:hover {
+  background: #f3c761;
+  color: #120e06;
+  box-shadow: 0 0 20px rgba(243, 199, 97, 0.6);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.home-slider-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.home-slider-btn.prev {
+  left: 24px;
+}
+
+.home-slider-btn.next {
+  right: 24px;
+}
+
+/* Counter Badge */
+.home-slider-counter {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(18, 14, 6, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #f3c761;
+  color: #f3c761;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-xs);
+  z-index: 10;
+}
+
+/* Auto-Slide Progress Bar */
+.home-slider-progress {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: 10;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.home-slider-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f3c761, #ffd978);
+  box-shadow: 0 0 8px rgba(243, 199, 97, 0.8);
+}
+
+/* Dot Indicators */
+.home-slider-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.home-slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(243, 199, 97, 0.25);
+  border: 1px solid rgba(243, 199, 97, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.home-slider-dot:hover {
+  background: rgba(243, 199, 97, 0.6);
+  transform: scale(1.2);
+}
+
+.home-slider-dot.active {
+  background: #f3c761;
+  border-color: #f3c761;
+  box-shadow: 0 0 10px rgba(243, 199, 97, 0.7);
+  width: 26px;
+  border-radius: 10px;
+}
+
+/* Thumbnails Strip */
+.home-slider-thumbs {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-border) transparent;
+  justify-content: flex-start;
+}
+
+@media (min-width: 900px) {
+  .home-slider-thumbs {
+    justify-content: center;
+  }
+}
+
+.home-slider-thumb {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(243, 199, 97, 0.3);
+  background: var(--bg-card);
+  cursor: pointer;
+  padding: 2px;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.home-slider-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-slider-thumb:hover {
+  opacity: 0.9;
+  border-color: #f3c761;
+  transform: translateY(-2px);
+}
+
+.home-slider-thumb.active {
+  opacity: 1;
+  border-color: #f3c761;
+  box-shadow: 0 0 10px rgba(243, 199, 97, 0.5);
+  transform: scale(1.06);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-slider-viewport {
+    height: 420px;
+    padding: 8px;
+  }
+  .home-slider-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .home-slider-btn.prev {
+    left: 12px;
+  }
+  .home-slider-btn.next {
+    right: 12px;
+  }
+  .home-slider-counter {
+    top: 14px;
+    right: 14px;
+    font-size: 0.72rem;
+  }
+  .home-slider-thumb {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-slider-viewport {
+    height: 310px;
+  }
+}
+
+
 
