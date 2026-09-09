@@ -236,13 +236,26 @@ function initModals() {
   const modalBackdrop = document.getElementById('globalModal');
   if (!modalBackdrop) return;
 
+  const modalBox = modalBackdrop.querySelector('.modal-box');
   const modalTitle = document.getElementById('modalTitle');
   const modalBody = document.getElementById('modalBody');
   const closeBtn = document.getElementById('modalClose');
 
-  window.openModal = function(title, contentHtml) {
-    if (modalTitle) modalTitle.textContent = title;
+  let activeSliderKeyHandler = null;
+
+  window.openModal = function(title, contentHtml, isLarge = false) {
+    if (modalTitle) {
+      modalTitle.textContent = title;
+      modalTitle.style.display = isLarge ? 'none' : 'block';
+    }
     if (modalBody) modalBody.innerHTML = contentHtml;
+    if (modalBox) {
+      if (isLarge) {
+        modalBox.classList.add('modal-box-large');
+      } else {
+        modalBox.classList.remove('modal-box-large');
+      }
+    }
     modalBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
@@ -250,6 +263,10 @@ function initModals() {
   window.closeModal = function() {
     modalBackdrop.classList.remove('open');
     document.body.style.overflow = '';
+    if (activeSliderKeyHandler) {
+      document.removeEventListener('keydown', activeSliderKeyHandler);
+      activeSliderKeyHandler = null;
+    }
   };
 
   if (closeBtn) closeBtn.addEventListener('click', window.closeModal);
@@ -263,39 +280,197 @@ function initModals() {
     }
   });
 
-  // Attach quick view to catalog cards
+  // Open interactive image slider for a catalog item
+  window.openCatalogSlider = function(card) {
+    if (!card) return;
+
+    const title = card.querySelector('.catalog-title, .work-card-title')?.textContent.trim() || 'Design Details';
+    const category = card.querySelector('.catalog-category, .work-card-category')?.textContent.trim() || 'Wallcovering Collection';
+    const specs = card.querySelector('.catalog-specs, .work-card-specs')?.innerHTML.trim() || '';
+    const primaryImg = card.querySelector('.catalog-card-media img, img')?.getAttribute('src') || '';
+
+    // Collect gallery images
+    let images = [];
+    const galleryAttr = card.getAttribute('data-gallery') || card.querySelector('.catalog-card-media')?.getAttribute('data-gallery');
+    if (galleryAttr) {
+      try {
+        images = JSON.parse(galleryAttr);
+      } catch (e) {
+        images = galleryAttr.split(',').map(s => s.trim()).filter(Boolean);
+      }
+    }
+
+    if (!Array.isArray(images) || images.length === 0) {
+      if (primaryImg) images = [primaryImg];
+    } else if (primaryImg && !images.includes(primaryImg)) {
+      images.unshift(primaryImg);
+    }
+
+    // Curated complementary fallbacks if only 1 image exists
+    if (images.length === 1) {
+      const fallbacks = [
+        'assets/images/hero-wallcovering.jpg',
+        'assets/images/gilded-powder-room.jpg'
+      ];
+      fallbacks.forEach(fb => {
+        if (fb !== primaryImg && !images.includes(fb)) images.push(fb);
+      });
+    }
+
+    // Build slide items & thumbnails
+    let slidesHtml = '';
+    let thumbsHtml = '';
+    images.forEach((imgSrc, idx) => {
+      slidesHtml += `
+        <div class="catalog-slider-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+          <img src="${imgSrc}" alt="${title} view ${idx + 1}" loading="eager">
+        </div>
+      `;
+      thumbsHtml += `
+        <button type="button" class="catalog-thumb-item ${idx === 0 ? 'active' : ''}" data-thumb-index="${idx}" aria-label="View slide ${idx + 1}">
+          <img src="${imgSrc}" alt="Thumbnail ${idx + 1}">
+        </button>
+      `;
+    });
+
+    const content = `
+      <div class="catalog-slider-layout">
+        <div class="catalog-slider-container">
+          <div class="catalog-slider-viewport" id="catalogSliderViewport">
+            ${slidesHtml}
+            ${images.length > 1 ? `
+              <button type="button" class="catalog-slider-btn prev" id="sliderPrevBtn" aria-label="Previous image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <button type="button" class="catalog-slider-btn next" id="sliderNextBtn" aria-label="Next image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="catalog-slider-badge" id="sliderCounterBadge">1 / ${images.length}</div>
+            ` : ''}
+          </div>
+          ${images.length > 1 ? `
+            <div class="catalog-slider-thumbs" id="sliderThumbs">
+              ${thumbsHtml}
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="catalog-slider-info">
+          <div class="catalog-slider-category">${category}</div>
+          <h3 class="catalog-slider-title">${title}</h3>
+          <div class="catalog-slider-specs">${specs}</div>
+          <p class="catalog-slider-desc">
+            Crafted with archival pigment inks on reinforced luxury substrates. Precision trimmed for edge-to-edge seamless installation by our guild-certified master paperhangers.
+          </p>
+          <div class="catalog-slider-actions">
+            <button onclick="orderSample('${title.replace(/'/g, "\\'")}')" class="btn btn-gold btn-sm">Order Physical Swatch</button>
+            <a href="contact.html?inquiry=${encodeURIComponent(title)}" class="btn btn-outline-dark btn-sm">Request Installation Quote</a>
+          </div>
+          <div class="catalog-slider-perks">
+            <span>✓ Hand-Trimmed Precision Match</span>
+            <span>✓ Complimentary Design Consultation</span>
+            <span>✓ Master Wallcovering Guild Certified</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    window.openModal(title, content, true);
+
+    // Initialize slider interactions
+    if (images.length > 1) {
+      setupCatalogSliderInteractivity(images.length);
+    }
+  };
+
+  function setupCatalogSliderInteractivity(totalSlides) {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.catalog-slider-slide');
+    const thumbs = document.querySelectorAll('.catalog-thumb-item');
+    const badge = document.getElementById('sliderCounterBadge');
+    const prevBtn = document.getElementById('sliderPrevBtn');
+    const nextBtn = document.getElementById('sliderNextBtn');
+    const viewport = document.getElementById('catalogSliderViewport');
+
+    function goToSlide(index) {
+      currentSlide = (index + totalSlides) % totalSlides;
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      thumbs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === currentSlide);
+        if (idx === currentSlide) {
+          t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+      if (badge) badge.textContent = `${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentSlide - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentSlide + 1);
+      });
+    }
+
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const idx = parseInt(thumb.getAttribute('data-thumb-index'), 10);
+        goToSlide(idx);
+      });
+    });
+
+    // Keyboard navigation (Arrow keys)
+    if (activeSliderKeyHandler) {
+      document.removeEventListener('keydown', activeSliderKeyHandler);
+    }
+    activeSliderKeyHandler = (e) => {
+      if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+      if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+    };
+    document.addEventListener('keydown', activeSliderKeyHandler);
+
+    // Touch Swipe gesture support
+    if (viewport) {
+      let touchStartX = 0;
+      let touchEndX = 0;
+      viewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 40) {
+          if (diff < 0) goToSlide(currentSlide + 1);
+          else goToSlide(currentSlide - 1);
+        }
+      }, { passive: true });
+    }
+  }
+
+  // Attach triggers to Quick View buttons
   document.querySelectorAll('.btn-quick-view').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
       const card = button.closest('.catalog-card') || button.closest('.work-card');
-      if (!card) return;
+      if (card) window.openCatalogSlider(card);
+    });
+  });
 
-      const title = card.querySelector('.catalog-title, .work-card-title')?.textContent || 'Design Details';
-      const imgSrc = card.querySelector('img')?.getAttribute('src') || '';
-      const category = card.querySelector('.catalog-category, .work-card-category')?.textContent || '';
-      const specs = card.querySelector('.catalog-specs, .work-card-specs')?.innerHTML || '';
-
-      const content = `
-        <div class="modal-quickview-grid">
-          <div class="modal-quickview-media">
-            <img src="${imgSrc}" alt="${title}">
-          </div>
-          <div>
-            <div style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-base); font-weight: 600; margin-bottom: 0.5rem;">${category}</div>
-            <h3 style="margin-bottom: 1rem; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; color: var(--text-dark);">${title}</h3>
-            <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">${specs}</div>
-            <p style="font-size: 0.88rem; color: var(--text-body); margin-bottom: 1.5rem;">
-              Crafted with archival pigment inks on reinforced heavyweight substrate. Precision trimmed for edge-to-edge seamless installation by our certified artisans.
-            </p>
-            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-              <a href="contact.html?inquiry=${encodeURIComponent(title)}" class="btn btn-gold btn-sm">Request Installation Quote</a>
-              <button onclick="orderSample('${title.replace(/'/g, "\\'")}')" class="btn btn-outline-dark btn-sm">Order Physical Swatch</button>
-            </div>
-          </div>
-        </div>
-      `;
-
-      window.openModal(title, content);
+  // Attach triggers to catalog card images (clicking on card media opens slider)
+  document.querySelectorAll('.catalog-card .catalog-card-media').forEach(media => {
+    media.addEventListener('click', (e) => {
+      if (e.target.closest('a, button')) return;
+      const card = media.closest('.catalog-card');
+      if (card) window.openCatalogSlider(card);
     });
   });
 
