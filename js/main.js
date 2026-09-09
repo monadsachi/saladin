@@ -290,7 +290,7 @@ function initModals() {
     const titleHtml = titleEl ? titleEl.innerHTML.trim() : altText;
     const titleText = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : altText;
     const title = titleText;
-    const category = card.querySelector('.catalog-category, .work-card-category, .work-badge')?.textContent.trim() || 'Wallcovering Collection';
+    const category = card.querySelector('.catalog-category, .catalog-tag, .work-card-category, .work-badge')?.textContent.trim() || 'Wallcovering Collection';
     const specs = card.querySelector('.catalog-specs, .work-card-specs')?.innerHTML.trim() || '';
     const primaryImg = card.querySelector('.catalog-card-media img, img')?.getAttribute('src') || '';
 
@@ -366,7 +366,6 @@ function initModals() {
           <div class="catalog-slider-specs">${specs}</div>
          
           <div class="catalog-slider-actions">
-            <button onclick="orderSample('${titleText.replace(/'/g, "\\'")}')" class="btn btn-gold btn-sm">Order Physical Swatch</button>
             <a href="contact.html?inquiry=${encodeURIComponent(titleText)}" class="btn btn-outline-dark btn-sm">Request Installation Quote</a>
           </div>
         

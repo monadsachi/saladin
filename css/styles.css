@@ -1476,7 +1476,10 @@ p:last-child {
   margin-bottom: 0.35rem;
 }
 
-.catalog-title {
+.catalog-title,
+span.catalog-title,
+h3.catalog-title {
+  color: var(--gold-base);
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
   line-height: 1.35;
