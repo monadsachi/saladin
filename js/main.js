@@ -575,7 +575,7 @@ function initContactForm() {
               Thank you for considering <strong>Saladin Wallcovering</strong>. One of our senior master installers will review your project parameters and contact you within 24 business hours with an initial estimate and calendar availability.
             </p>
             <div style="background: var(--bg-secondary); border: 1px solid var(--gold-border); padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-              Priority Booking Hotline: <strong style="color: var(--text-dark);">+1 (800) 725-2346</strong>
+              Priority Booking Hotline: <strong style="color: var(--text-dark);">+1 (704) 957-0044</strong>
             </div>
             <button onclick="closeModal()" class="btn btn-gold">Return to Saladin</button>
           </div>
